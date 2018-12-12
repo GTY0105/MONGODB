@@ -1,0 +1,35 @@
+login:
+client
+authentication module
+
+loginController.login(uname, password) -> authenticationService.login(username, password)[server' a istek yolluyo]
+
+
+server
+userController.login() return json({response: success})[to client]
+
+
+start a debate:
+
+[client] startConference()->createDebate(title invitation)
+[server] debateController.createDebate()-> return json({response: status:success, debate: debate})
+[client] joinDebate(debate) -> startStreaming(usesCamera, usesMicrophone) -> publishStream() -> sendOffer(streamName, sdp)
+[signaller] sendOffer(streamName, sdp)-> createPipeline(sdp)->  setMediaBitrates(sdp, 480, 50) -> user.Message(New-ice_candidate)
+
+add resource
+[client] addResource(streamName, description, url) -> 
+[server] resourceController.addResource(name, desc, url)-> return json({response: success})
+
+publishResource
+[client] publishResource(resourceId, debateId) -> 
+[server] resourceController.publishResource(resourceId, debateId)-> return json({response: success}) -> Debate.message({resource})
+
+addIPcam
+[wowza] add rtsp link of ipcam's -> convert to HLS -> ipcamHLSurl
+[client] addResource(streamName, description, ipcamHLSurl) -> 
+[server] resourceController.addResource(name, desc, ipcamHLSurl)-> return json({response: success})
+
+ipcam
+add ipcam's rtsp link to wowza as incoming stream, then wowza convert to HLS.
+
+neden wowza gerekli: browser da oynatabilmemiz icin streamin HLS olmasý lazým. 
